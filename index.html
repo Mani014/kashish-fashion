@@ -1,86 +1,604 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kashish Fashion | Girls Wear, Kids Wear & Bridal</title>
-<meta name="description" content="Kashish Fashion online showroom — Girls Wear, Kids Wear and Bridal Collection.">
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kashish Fashion | Modern Luxury Web App</title>
+    
+    <!-- New Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Modern Luxury Palette */
+            --brand-wine: #6B1B29;
+            --brand-gold: #C5A059;
+            --bg-light: #FDFBF9;
+            --card-bg: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-muted: #888888;
+            --whatsapp-green: #25D366;
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding-bottom: 100px; /* Extra space for floating nav */
+        }
+
+        .brand-font { font-family: 'Cormorant Garamond', serif; }
+
+        /* --- Floating Glass Header --- */
+        .app-bar {
+            background-color: rgba(253, 251, 249, 0.85);
+            backdrop-filter: blur(12px);
+            color: var(--brand-wine);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+
+        .app-bar-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header-icon {
+            font-size: 22px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .header-icon:hover { color: var(--brand-gold); }
+
+        /* --- Side Menu --- */
+        .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 999; }
+        .side-menu { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background-color: var(--card-bg); box-shadow: 5px 0 30px rgba(0,0,0,0.15); z-index: 1000; transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; }
+        .side-menu.open { left: 0; }
+        .menu-header { background: var(--brand-wine); color: #fff; padding: 40px 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand-gold); }
+        .menu-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; letter-spacing: 1px; }
+        .menu-links { padding: 15px 0; }
+        .menu-links a { display: block; padding: 16px 25px; color: var(--text-dark); font-weight: 500; text-decoration: none; font-size: 14px; transition: background 0.3s; border-left: 3px solid transparent; }
+        .menu-links a:hover { background: #f9f9f9; border-left: 3px solid var(--brand-gold); color: var(--brand-wine); }
+        .menu-links a i { width: 35px; color: var(--brand-gold); font-size: 18px; }
+
+        /* --- Modern Hero Banner --- */
+        .luxury-banner {
+            margin: 20px 15px;
+            border-radius: 20px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+            color: #FFFFFF;
+            padding: 50px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+        .luxury-banner h2 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; margin-bottom: 10px; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .luxury-banner p { font-size: 13px; font-weight: 300; margin-bottom: 25px; color: #FDFBF9; letter-spacing: 1px; }
+        .explore-btn {
+            background: rgba(255,255,255,0.95);
+            color: var(--brand-wine); border: none; padding: 12px 30px; font-weight: 600; font-size: 12px;
+            border-radius: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            transition: transform 0.2s;
+        }
+        .explore-btn:active { transform: scale(0.95); }
+
+        /* --- Modern Categories (Horizontal Scroll) --- */
+        .categories-wrapper { padding: 0 5px; margin-bottom: 25px; }
+        .categories {
+            display: flex; gap: 15px; overflow-x: auto; padding: 10px 15px; scrollbar-width: none;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+        .category-box {
+            min-width: 110px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 15px 10px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s, border 0.2s;
+        }
+        .category-box:active { transform: scale(0.96); border-color: var(--brand-gold); }
+        .category-icon {
+            background: #FDFBF9; color: var(--brand-wine);
+            width: 55px; height: 55px; border-radius: 14px; display: flex; align-items: center;
+            justify-content: center; font-size: 22px; margin: 0 auto 10px auto;
+        }
+        .category-name { font-size: 11px; font-weight: 600; color: var(--text-dark); letter-spacing: 0.5px; }
+
+        /* --- Seamless Products Grid --- */
+        .products-header { padding: 0 20px 15px; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text-dark); }
+        .products-container { padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; }
+
+        .product-card {
+            background: var(--card-bg); border-radius: 18px; overflow: hidden;
+            box-shadow: var(--shadow-soft); transition: transform 0.3s ease;
+        }
+        .img-wrapper { position: relative; width: 100%; padding-top: 130%; background-color: #f5f5f5; cursor: pointer; }
+        .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Glassmorphism Wishlist Button */
+        .wishlist-btn {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(8px);
+            width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; z-index: 10; font-size: 16px;
+        }
+        
+        .product-details { padding: 15px; }
+        .product-title { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; cursor: pointer; }
+        .price-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .mrp { text-decoration: line-through; color: var(--text-muted); font-size: 11px; font-weight: 500; }
+        .discount { color: var(--brand-wine); font-weight: 700; font-size: 10px; background: rgba(107, 27, 41, 0.08); padding: 3px 8px; border-radius: 20px; }
+        .final-price { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; font-family: 'Poppins', sans-serif; }
+        
+        .order-btn {
+            width: 100%; padding: 10px; background-color: var(--text-dark); color: white;
+            border: none; border-radius: 25px; font-weight: 600; font-size: 12px; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.3s;
+        }
+        .order-btn:hover { background-color: var(--brand-wine); }
+
+        /* --- Footer --- */
+        .footer { margin-top: 40px; padding: 30px 20px 40px; background: var(--card-bg); text-align: center; border-top: 1px solid rgba(0,0,0,0.05); border-radius: 30px 30px 0 0; }
+        .footer-address { font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+        .social-container { display: flex; justify-content: center; gap: 20px; margin-top: 25px; }
+        .social-icon { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 50%; color: #ffffff; font-size: 20px; text-decoration: none; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .ig-bg { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .yt-bg { background-color: #FF0000; }
+
+        /* --- Floating Bottom Navigation --- */
+        .bottom-nav {
+            position: fixed; bottom: 20px; left: 5%; width: 90%; 
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-around; padding: 12px 10px;
+            border-radius: 35px; box-shadow: 0 10px 40px rgba(0,0,0,0.12); z-index: 100;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center;
+            color: var(--text-muted); font-size: 10px; font-weight: 600; text-decoration: none; cursor: pointer;
+            transition: color 0.3s; width: 60px;
+        }
+        .nav-item i { font-size: 22px; margin-bottom: 4px; transition: transform 0.2s; }
+        .nav-item.active { color: var(--brand-wine); }
+        .nav-item.active i { transform: translateY(-3px); }
+
+        /* --- MODALS (Bottom Sheets) --- */
+        .custom-popup { display: none; position: fixed; z-index: 1500; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(5px); justify-content: center; align-items: flex-end; }
+        .popup-box { background: var(--bg-light); width: 100%; max-height: 92%; border-radius: 30px 30px 0 0; padding: 25px; overflow-y: auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; background: var(--bg-light); z-index: 10; padding-bottom: 10px; }
+        .popup-header h3 { color: var(--text-dark); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; }
+        .close-icon { font-size: 24px; color: var(--text-muted); cursor: pointer; background: rgba(0,0,0,0.05); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        
+        .detail-img-container { position: relative; width: 100%; height: 400px; background: #fff; border-radius: 20px; margin-bottom: 20px; overflow: hidden; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow-soft); }
+        .detail-img { width: 100%; height: 100%; object-fit: contain; cursor: pointer; }
+        .zoom-hint { position: absolute; bottom: 15px; center; background: rgba(0,0,0,0.6); color: white; padding: 8px 16px; font-size: 11px; border-radius: 20px; pointer-events: none; font-weight: 500; letter-spacing: 0.5px; backdrop-filter: blur(4px); }
+
+        .detail-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; line-height: 1.2; }
+        .detail-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 25px; white-space: pre-wrap; font-weight: 300; }
+        .detail-prices { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; background: #fff; padding: 18px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); }
+
+        .fullscreen-modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); justify-content: center; align-items: center; overflow: hidden; touch-action: none; }
+        .fullscreen-img-wrapper { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+        .fullscreen-modal img { max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: 0 0; cursor: grab; user-select: none; will-change: transform; }
+        .zoom-controls { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); padding: 10px 25px; border-radius: 50px; z-index: 3100; border: 1px solid rgba(255,255,255,0.2); }
+        .zoom-btn { background: white; color: #000; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 20px; font-weight: 500; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; }
+        .fullscreen-close { position: absolute; top: 25px; right: 25px; color: white; background: rgba(255,255,255,0.2); width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; z-index: 3100; backdrop-filter: blur(5px); }
+
+        .wishlist-item { display: flex; gap: 15px; align-items: center; background: #fff; padding: 15px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .wishlist-item img { width: 80px; height: 90px; object-fit: cover; border-radius: 10px; }
+        .wishlist-info { flex: 1; }
+        .wishlist-title { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+        .wishlist-price { color: var(--text-dark); font-weight: 700; font-size: 15px; }
+        .wishlist-remove { color: #fff; background: #ff4757; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(255,71,87,0.3); }
+
+        .store-info-box { background: #fff; padding: 25px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-soft); margin-bottom: 25px; }
+    </style>
 </head>
 <body>
-<header class="header">
-  <button class="menu" id="menu">☰</button>
-  <a href="#home" class="logo">Kashish <span>Fashion</span></a>
-  <button class="heart" id="wishlistBtn">♡</button>
-</header>
 
-<div class="drawer" id="drawer">
-  <button class="close" id="close">×</button>
-  <h2>Kashish Fashion</h2>
-  <a href="#home">Home</a><a href="#shop">Shop</a><a href="#girls">Girls Wear</a>
-  <a href="#kids">Kids Wear</a><a href="#bridal">Bridal</a><a href="#contact">Contact</a>
-</div>
-
-<main id="home">
-<section class="hero">
-  <img src="assets/hero.jpg" alt="Royal Bridal">
-  <div class="heroText">
-    <h1>Royal Bridal</h1><p>Exquisite Handcrafted Lehengas</p>
-    <a class="btn" href="#shop">EXPLORE COLLECTION →</a>
-  </div>
-</section>
-
-<section class="categories">
-  <button data-filter="Girls Wear"><span>👗</span><b>Girls Wear</b></button>
-  <button data-filter="Kids Wear"><span>🧒</span><b>Kids Wear</b></button>
-  <button data-filter="Bridal"><span>💎</span><b>Bridal</b></button>
-</section>
-
-<section id="shop" class="section">
-  <div class="title"><h2>New Arrivals</h2><i></i></div>
-  <div class="filters">
-    <button class="filter active" data-filter="All">All</button>
-    <button class="filter" data-filter="Girls Wear">Girls Wear</button>
-    <button class="filter" data-filter="Kids Wear">Kids Wear</button>
-    <button class="filter" data-filter="Bridal">Bridal</button>
-  </div>
-  <div class="grid" id="products"></div>
-</section>
-
-<section class="offer">
-  <div><small>FESTIVE SPECIAL</small><h2>30% OFF</h2><p>Selected Kashish Fashion collections</p></div>
-  <a class="btn" href="#shop">SHOP NOW</a>
-</section>
-
-<section id="contact" class="contact">
-  <div><h2>Visit Kashish Fashion</h2><p>Main Road, Lakhe Nagar, Raipur, Chhattisgarh</p><p>Girls Wear • Kids Wear • Bridal Lehenga</p></div>
-  <a class="whatsapp" id="wa" href="#" target="_blank">Order on WhatsApp</a>
-</section>
-</main>
-
-<div class="modal" id="productModal">
-  <div class="modalBox"><button class="modalClose" id="modalClose">×</button>
-    <img id="modalImg" alt=""><div class="modalInfo">
-      <p id="modalCat"></p><h2 id="modalName"></h2><div class="price" id="modalPrice"></div>
-      <p id="modalDesc">Premium fashion collection from Kashish Fashion.</p>
-      <button class="btn full" id="addCart">ADD TO CART</button>
-      <a class="whatsapp full" id="modalWa" target="_blank">ORDER ON WHATSAPP</a>
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div>
+                <div style="font-size: 12px; font-family: 'Poppins', sans-serif; letter-spacing: 2px; color: var(--brand-gold); margin-bottom: 5px; text-transform: uppercase;">Boutique</div>
+                <h3>Kashish Fashion</h3>
+            </div>
+            <i class="fa-solid fa-times close-icon" style="background: rgba(255,255,255,0.1); color: #fff;" onclick="closeMenu()"></i>
+        </div>
+        <div class="menu-links">
+            <a href="#top" onclick="closeMenu()"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="#recent-arrivals" onclick="closeMenu()"><i class="fa-solid fa-gem"></i> Collections</a>
+            <a href="#" onclick="openWishlistModal(); closeMenu()"><i class="fa-solid fa-heart"></i> My Wishlist</a>
+            <a href="#" onclick="openAccountModal(); closeMenu()"><i class="fa-regular fa-user"></i> Store Info</a>
+            
+            <div style="margin: 20px 25px; border-top: 1px solid #eee; padding-top: 20px;">
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Connect</p>
+                <a href="https://wa.me/917610603338" target="_blank" onclick="closeMenu()" style="padding: 10px 0;"><i class="fa-brands fa-whatsapp" style="color: var(--whatsapp-green);"></i> WhatsApp Support</a>
+                <a href="https://www.instagram.com/kashish__fashion__/" target="_blank" onclick="closeMenu()" style="padding: 10px 0;"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i> Instagram</a>
+                <a href="https://youtube.com/@kashish_fashion_raipur1?si=cHqmiEOIC7lea--a" target="_blank" onclick="closeMenu()" style="padding: 10px 0;"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i> YouTube</a>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<div class="cart" id="cart">
-  <div><b>Cart</b><span id="cartCount">0</span></div>
-  <div id="cartItems"></div>
-  <div class="cartBottom"><strong>Total: ₹<span id="total">0</span></strong><a id="checkout" class="btn">WhatsApp Order</a></div>
-</div>
+    <header class="app-bar" id="top">
+        <i class="fa-solid fa-bars-staggered header-icon" onclick="openMenu()"></i>
+        <div class="app-bar-title">Kashish Fashion</div>
+        <i class="fa-regular fa-heart header-icon" onclick="openWishlistModal()"></i>
+    </header>
 
-<nav class="bottom">
-<a class="active" href="#home">⌂<small>Home</small></a>
-<a href="#shop">▦<small>Shop</small></a>
-<a href="#" id="savedNav">♡<small>Saved</small></a>
-<a href="#contact">♙<small>Profile</small></a>
-</nav>
+    <div class="luxury-banner">
+        <h2>Royal Bridal</h2>
+        <p>Exquisite Handcrafted Lehengas</p>
+        <button class="explore-btn" onclick="document.getElementById('recent-arrivals').scrollIntoView();">
+            Explore Collection
+        </button>
+    </div>
 
-<script src="script.js"></script>
-</body></html>
+    <div class="categories-wrapper">
+        <div class="categories">
+            <div class="category-box" onclick="document.getElementById('recent-arrivals').scrollIntoView();">
+                <div class="category-icon"><i class="fa-solid fa-person-dress"></i></div>
+                <div class="category-name">Girls Wear</div>
+            </div>
+            <div class="category-box" onclick="document.getElementById('recent-arrivals').scrollIntoView();">
+                <div class="category-icon"><i class="fa-solid fa-child-reaching"></i></div>
+                <div class="category-name">Kids Wear</div>
+            </div>
+            <div class="category-box" onclick="document.getElementById('recent-arrivals').scrollIntoView();">
+                <div class="category-icon"><i class="fa-solid fa-gem"></i></div>
+                <div class="category-name">Bridal</div>
+            </div>
+            <div class="category-box" onclick="document.getElementById('recent-arrivals').scrollIntoView();">
+                <div class="category-icon"><i class="fa-solid fa-star"></i></div>
+                <div class="category-name">Trending</div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="products-header" id="recent-arrivals">New Arrivals</h3>
+    <div class="products-container" id="products-container">
+        <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px; font-weight: 300;">Loading exclusive collection...</p>
+    </div>
+
+    <div class="footer">
+        <div class="footer-address">
+            <i class="fa-solid fa-location-dot" style="color: var(--brand-gold); font-size: 18px; margin-bottom: 8px; display: block;"></i> 
+            Kashish Fashion<br>
+            Main Road, Lakhe Nagar, Raipur C.G.
+        </div>
+        
+        <div class="social-container">
+            <a href="https://www.instagram.com/kashish__fashion__/" target="_blank" class="social-icon ig-bg"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/917610603338" target="_blank" class="social-icon" style="background: var(--whatsapp-green);"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://youtube.com/@kashish_fashion_raipur1?si=cHqmiEOIC7lea--a" target="_blank" class="social-icon yt-bg"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+    </div>
+
+    <!-- Floating Nav -->
+    <nav class="bottom-nav">
+        <a href="#top" class="nav-item active">
+            <i class="fa-solid fa-house"></i> Home
+        </a>
+        <a href="#recent-arrivals" class="nav-item">
+            <i class="fa-solid fa-border-all"></i> Shop
+        </a>
+        <div class="nav-item" onclick="openWishlistModal()">
+            <i class="fa-regular fa-heart"></i> Saved
+        </div>
+        <div class="nav-item" onclick="openAccountModal()">
+            <i class="fa-regular fa-user"></i> Profile
+        </div>
+    </nav>
+
+    <!-- Product Detail Modal -->
+    <div id="productDetailModal" class="custom-popup">
+        <div class="popup-box">
+            <div class="popup-header">
+                <h3>Details</h3>
+                <i class="fa-solid fa-times close-icon" onclick="closeProductDetail()"></i>
+            </div>
+            <div>
+                <div class="detail-img-container" onclick="openFullscreenImage()">
+                    <img id="detailImg" class="detail-img" src="" alt="Product Image">
+                    <div class="zoom-hint"><i class="fa-solid fa-expand"></i> Tap to Zoom</div>
+                </div>
+                
+                <div id="detailTitle" class="detail-title">Product Name</div>
+                <div id="detailDesc" class="detail-desc">No description provided.</div>
+                
+                <div class="detail-prices">
+                    <div>
+                        <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; font-weight:600; letter-spacing: 1px;">Retail Price</div>
+                        <div><span id="detailMrp" class="mrp">₹0</span> <span id="detailDisc" class="discount" style="margin-left: 5px;">0% OFF</span></div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:11px; color:var(--brand-wine); text-transform:uppercase; font-weight:700; letter-spacing: 1px;">Our Price</div>
+                        <div id="detailPrice" class="final-price" style="font-size:22px; margin-bottom:0;">₹0</div>
+                    </div>
+                </div>
+
+                <button id="detailBuyBtn" onclick="" style="background: var(--whatsapp-green); color: white; border: none; padding: 16px; width: 100%; border-radius: 16px; font-weight: 600; font-size: 15px; cursor: pointer; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); transition: transform 0.2s;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 18px; margin-right: 5px;"></i> Order via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zoom Modal -->
+    <div id="fullscreenModal" class="fullscreen-modal">
+        <div class="fullscreen-close" onclick="closeFullscreenImage()"><i class="fa-solid fa-times"></i></div>
+        <div class="fullscreen-img-wrapper" id="imgWrapper">
+            <img id="fullscreenImg" src="" alt="Zoomable Image">
+        </div>
+        <div class="zoom-controls">
+            <button class="zoom-btn" onclick="zoomOutBtn()"><i class="fa-solid fa-minus"></i></button>
+            <button class="zoom-btn" onclick="resetZoom()"><i class="fa-solid fa-rotate-right"></i></button>
+            <button class="zoom-btn" onclick="zoomInBtn()"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlistModal" class="custom-popup">
+        <div class="popup-box">
+            <div class="popup-header">
+                <h3>My Wishlist</h3>
+                <i class="fa-solid fa-times close-icon" onclick="closeWishlistModal()"></i>
+            </div>
+            <div id="wishlist-content" style="padding-top: 10px;">
+                <div style="text-align:center; color:var(--text-muted); margin-top:40px; padding-bottom: 40px;">
+                    <i class="fa-regular fa-heart" style="font-size: 40px; color: #ddd; margin-bottom: 15px;"></i>
+                    <p>Your wishlist is empty.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Profile Modal -->
+    <div id="accountModal" class="custom-popup">
+        <div class="popup-box">
+            <div class="popup-header">
+                <h3>Store Profile</h3>
+                <i class="fa-solid fa-times close-icon" onclick="closeAccountModal()"></i>
+            </div>
+            
+            <div class="store-info-box">
+                <div style="font-size: 40px; color: var(--brand-gold); margin-bottom: 15px;"><i class="fa-solid fa-crown"></i></div>
+                <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--text-dark); margin-bottom: 8px; font-weight: 700;">Kashish Fashion</h4>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 0;">Luxury Bridal Lehengas & Kids Ethnic Collection.</p>
+            </div>
+                
+            <div style="background: #fff; padding: 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: var(--shadow-soft);">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0;">
+                    <div style="background: rgba(197, 160, 89, 0.1); color: var(--brand-gold); width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 18px;"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Location</div>
+                        <div style="font-size: 13px; color: var(--text-dark); font-weight: 500;">Main Road, Lakhe Nagar, Raipur</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: rgba(37, 211, 102, 0.1); color: var(--whatsapp-green); width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 18px;"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Helpline</div>
+                        <div style="font-size: 14px; color: var(--text-dark); font-weight: 600;">+91 76106-03338</div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="orderWhatsApp('')" style="background: var(--whatsapp-green); color: white; border: none; padding: 16px; width: 100%; border-radius: 16px; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);">
+                <i class="fa-brands fa-whatsapp"></i> Chat with Support
+            </button>
+            
+            <div style="height: 20px;"></div>
+        </div>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHQn1l6XUVFt2ullsSSaDmmdi9aJtXlE8",
+            authDomain: "kashish-fashion-31b54.firebaseapp.com",
+            projectId: "kashish-fashion-31b54",
+            storageBucket: "kashish-fashion-31b54.firebasestorage.app",
+            messagingSenderId: "582594736534",
+            appId: "1:582594736534:web:a47370ab71d800fb676db7",
+            measurementId: "G-737V14ZR67"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadProducts() {
+            const container = document.getElementById('products-container');
+            let savedWishlist = JSON.parse(localStorage.getItem('kashish_wishlist')) || [];
+
+            try {
+                const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: var(--text-muted);'>No products available currently.</p>";
+                    return;
+                }
+                container.innerHTML = ""; 
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const pId = doc.id;
+                    const cleanName = (data.productName || "").replace(/'/g, "\\'");
+                    const cleanDesc = (data.description || "No description provided.").replace(/'/g, "\\'").replace(/\n/g, " ");
+                    
+                    const isInWishlist = savedWishlist.some(item => item.id === pId);
+                    const heartClass = isInWishlist ? 'fa-solid' : 'fa-regular';
+                    const heartColor = isInWishlist ? '#ff4757' : '#444'; 
+
+                    const productHTML = `
+                        <div class="product-card">
+                            <div class="img-wrapper" onclick="openProductDetail('${data.imageUrl}', '${cleanName}', '${cleanDesc}', '${data.mrp}', '${data.discount}', '${data.price}')">
+                                <img src="${data.imageUrl}" alt="${data.productName}" class="product-image" onerror="this.src='https://via.placeholder.com/200?text=Kashish+Fashion'">
+                                <div class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist('${pId}', '${cleanName}', '${data.price}', '${data.imageUrl}')">
+                                    <i id="heart-${pId}" class="${heartClass} fa-heart" style="color: ${heartColor}"></i>
+                                </div>
+                            </div>
+                            <div class="product-details">
+                                <div class="product-title" onclick="openProductDetail('${data.imageUrl}', '${cleanName}', '${cleanDesc}', '${data.mrp}', '${data.discount}', '${data.price}')">${data.productName}</div>
+                                <div class="price-row">
+                                    <span class="mrp">₹${data.mrp}</span>
+                                    <span class="discount">${data.discount}% OFF</span>
+                                </div>
+                                <div class="final-price">₹${data.price}</div>
+                                <button class="order-btn" onclick="orderWhatsApp('${cleanName}')">
+                                    <i class="fa-brands fa-whatsapp"></i> Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += productHTML;
+                });
+            } catch (error) {
+                console.error("Error fetching products: ", error);
+                container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: red;'>Connection Error.</p>";
+            }
+        }
+        window.onload = loadProducts;
+    </script>
+
+    <script>
+        let currentImgUrl = "";
+        let scale = 1; let panning = false; let pointX = 0; let pointY = 0; let startX = 0; let startY = 0; let initialDistance = null;
+        const img = document.getElementById('fullscreenImg'); const wrapper = document.getElementById('imgWrapper');
+
+        function openMenu() { document.getElementById("sideMenu").classList.add("open"); document.getElementById("menuOverlay").style.display = "block"; }
+        function closeMenu() { document.getElementById("sideMenu").classList.remove("open"); document.getElementById("menuOverlay").style.display = "none"; }
+
+        function openProductDetail(imgUrl, name, desc, mrp, disc, price) {
+            currentImgUrl = imgUrl; document.getElementById("detailImg").src = imgUrl; document.getElementById("detailTitle").innerText = name;
+            document.getElementById("detailDesc").innerText = desc; document.getElementById("detailMrp").innerText = "₹" + mrp;
+            document.getElementById("detailDisc").innerText = disc + "% OFF"; document.getElementById("detailPrice").innerText = "₹" + price;
+            document.getElementById("detailBuyBtn").setAttribute("onclick", `orderWhatsApp('${name}')`);
+            document.getElementById("productDetailModal").style.display = "flex";
+        }
+        function closeProductDetail() { document.getElementById("productDetailModal").style.display = "none"; }
+
+        function openFullscreenImage() { scale = 1; pointX = 0; pointY = 0; img.src = currentImgUrl; setTransform(); document.getElementById("fullscreenModal").style.display = "flex"; }
+        function closeFullscreenImage() { document.getElementById("fullscreenModal").style.display = "none"; }
+        function setTransform() { img.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`; }
+        function zoomInBtn() { scale = Math.min(scale + 0.5, 4); setTransform(); }
+        function zoomOutBtn() { scale = Math.max(scale - 0.5, 1); if (scale === 1) { pointX = 0; pointY = 0; } setTransform(); }
+        function resetZoom() { scale = 1; pointX = 0; pointY = 0; setTransform(); }
+
+        wrapper.onmousedown = function (e) { e.preventDefault(); startX = e.clientX - pointX; startY = e.clientY - pointY; panning = true; };
+        wrapper.onmouseup = function (e) { panning = false; };
+        wrapper.onmousemove = function (e) { if (!panning) return; e.preventDefault(); pointX = e.clientX - startX; pointY = e.clientY - startY; setTransform(); };
+
+        wrapper.ontouchstart = function (e) {
+            if (e.touches.length === 1) { panning = true; startX = e.touches[0].clientX - pointX; startY = e.touches[0].clientY - pointY; } 
+            else if (e.touches.length === 2) { panning = false; initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); }
+        };
+        wrapper.ontouchmove = function (e) {
+            if (panning && e.touches.length === 1) { pointX = e.touches[0].clientX - startX; pointY = e.touches[0].clientY - startY; setTransform(); } 
+            else if (e.touches.length === 2 && initialDistance !== null) {
+                const currentDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                const factor = currentDistance / initialDistance; scale = Math.min(Math.max(scale * factor, 1), 4); initialDistance = currentDistance; setTransform();
+            }
+        };
+        wrapper.ontouchend = function (e) { if (e.touches.length < 2) initialDistance = null; if (e.touches.length === 0) panning = false; };
+
+        let lastTap = 0;
+        img.onclick = function(e) {
+            let now = new Date().getTime();
+            if (now - lastTap < 300) { if (scale > 1) { resetZoom(); } else { scale = 2.5; setTransform(); } }
+            lastTap = now;
+        };
+
+        function orderWhatsApp(productName) {
+            const phone = "917610603338";
+            let message = productName ? `Hello Kashish Fashion, I want to order/inquire about: *${productName}*` : 'Hello Kashish Fashion, I want to inquire.';
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function toggleWishlist(id, name, price, imgUrl) {
+            let wishlist = JSON.parse(localStorage.getItem('kashish_wishlist')) || [];
+            const index = wishlist.findIndex(item => item.id === id);
+            const heartIcon = document.getElementById(`heart-${id}`);
+
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                if(heartIcon) { heartIcon.className = 'fa-regular fa-heart'; heartIcon.style.color = '#444'; }
+            } else {
+                wishlist.push({ id, name, price, imgUrl });
+                if(heartIcon) { heartIcon.className = 'fa-solid fa-heart'; heartIcon.style.color = '#ff4757'; }
+            }
+            localStorage.setItem('kashish_wishlist', JSON.stringify(wishlist));
+            if(document.getElementById("wishlistModal").style.display === "flex") { renderWishlistModal(); }
+        }
+
+        function openWishlistModal() { document.getElementById("wishlistModal").style.display = "flex"; renderWishlistModal(); }
+        function closeWishlistModal() { document.getElementById("wishlistModal").style.display = "none"; }
+
+        function renderWishlistModal() {
+            const container = document.getElementById('wishlist-content');
+            let wishlist = JSON.parse(localStorage.getItem('kashish_wishlist')) || [];
+            if (wishlist.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:var(--text-muted); margin-top:40px; padding-bottom: 40px;"><i class="fa-regular fa-heart" style="font-size: 40px; color: #ddd; margin-bottom: 15px;"></i><p>Your wishlist is empty.</p></div>';
+                return;
+            }
+            container.innerHTML = '';
+            wishlist.forEach(item => {
+                const cleanName = (item.name || "").replace(/'/g, "\\'");
+                container.innerHTML += `
+                    <div class="wishlist-item">
+                        <img src="${item.imgUrl}" alt="${item.name}">
+                        <div class="wishlist-info">
+                            <div class="wishlist-title">${item.name}</div>
+                            <div class="wishlist-price">₹${item.price}</div>
+                            <button onclick="orderWhatsApp('${cleanName}')" style="background:var(--text-dark); color:white; border:none; padding:8px 15px; border-radius:20px; font-weight:500; margin-top:8px; font-size:12px; cursor:pointer;">Order Now</button>
+                        </div>
+                        <button class="wishlist-remove" onclick="toggleWishlist('${item.id}', '${cleanName}', '${item.price}', '${item.imgUrl}')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function openAccountModal() { document.getElementById("accountModal").style.display = "flex"; }
+        function closeAccountModal() { document.getElementById("accountModal").style.display = "none"; }
+        
+        // Active Nav State logic
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
