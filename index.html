@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kashish Fashion | Girls Wear, Kids Wear & Bridal</title>
+<meta name="description" content="Kashish Fashion online showroom — Girls Wear, Kids Wear and Bridal Collection.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+  <button class="menu" id="menu">☰</button>
+  <a href="#home" class="logo">Kashish <span>Fashion</span></a>
+  <button class="heart" id="wishlistBtn">♡</button>
+</header>
+
+<div class="drawer" id="drawer">
+  <button class="close" id="close">×</button>
+  <h2>Kashish Fashion</h2>
+  <a href="#home">Home</a><a href="#shop">Shop</a><a href="#girls">Girls Wear</a>
+  <a href="#kids">Kids Wear</a><a href="#bridal">Bridal</a><a href="#contact">Contact</a>
+</div>
+
+<main id="home">
+<section class="hero">
+  <img src="assets/hero.jpg" alt="Royal Bridal">
+  <div class="heroText">
+    <h1>Royal Bridal</h1><p>Exquisite Handcrafted Lehengas</p>
+    <a class="btn" href="#shop">EXPLORE COLLECTION →</a>
+  </div>
+</section>
+
+<section class="categories">
+  <button data-filter="Girls Wear"><span>👗</span><b>Girls Wear</b></button>
+  <button data-filter="Kids Wear"><span>🧒</span><b>Kids Wear</b></button>
+  <button data-filter="Bridal"><span>💎</span><b>Bridal</b></button>
+</section>
+
+<section id="shop" class="section">
+  <div class="title"><h2>New Arrivals</h2><i></i></div>
+  <div class="filters">
+    <button class="filter active" data-filter="All">All</button>
+    <button class="filter" data-filter="Girls Wear">Girls Wear</button>
+    <button class="filter" data-filter="Kids Wear">Kids Wear</button>
+    <button class="filter" data-filter="Bridal">Bridal</button>
+  </div>
+  <div class="grid" id="products"></div>
+</section>
+
+<section class="offer">
+  <div><small>FESTIVE SPECIAL</small><h2>30% OFF</h2><p>Selected Kashish Fashion collections</p></div>
+  <a class="btn" href="#shop">SHOP NOW</a>
+</section>
+
+<section id="contact" class="contact">
+  <div><h2>Visit Kashish Fashion</h2><p>Main Road, Lakhe Nagar, Raipur, Chhattisgarh</p><p>Girls Wear • Kids Wear • Bridal Lehenga</p></div>
+  <a class="whatsapp" id="wa" href="#" target="_blank">Order on WhatsApp</a>
+</section>
+</main>
+
+<div class="modal" id="productModal">
+  <div class="modalBox"><button class="modalClose" id="modalClose">×</button>
+    <img id="modalImg" alt=""><div class="modalInfo">
+      <p id="modalCat"></p><h2 id="modalName"></h2><div class="price" id="modalPrice"></div>
+      <p id="modalDesc">Premium fashion collection from Kashish Fashion.</p>
+      <button class="btn full" id="addCart">ADD TO CART</button>
+      <a class="whatsapp full" id="modalWa" target="_blank">ORDER ON WHATSAPP</a>
+    </div>
+  </div>
+</div>
+
+<div class="cart" id="cart">
+  <div><b>Cart</b><span id="cartCount">0</span></div>
+  <div id="cartItems"></div>
+  <div class="cartBottom"><strong>Total: ₹<span id="total">0</span></strong><a id="checkout" class="btn">WhatsApp Order</a></div>
+</div>
+
+<nav class="bottom">
+<a class="active" href="#home">⌂<small>Home</small></a>
+<a href="#shop">▦<small>Shop</small></a>
+<a href="#" id="savedNav">♡<small>Saved</small></a>
+<a href="#contact">♙<small>Profile</small></a>
+</nav>
+
+<script src="script.js"></script>
+</body></html>
